@@ -350,7 +350,6 @@ class DuckScene(BaseScene):
     def explode(self, ducky: _sprites.Ducky) -> None:
         """Blow up a denied duck."""
         # Super impressive explosions
-        ducky.alpha = 190
         seq = ducky.explode()
         seq.add_callback(seq.total_time, lambda: self.ducks.remove(ducky))
         self.animations.fire(ducky, seq)

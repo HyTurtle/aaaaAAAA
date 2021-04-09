@@ -134,14 +134,15 @@ class Ducky(PydisSprite):
         x1, y1 = self.position
         x2, y2 = constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT * .64
         angle = degrees(sin((x2 - x1) / max((y2 - y1), 1)))
-        w, h = self.width, self.height
+        w, h, a = self.width, self.height, self.alpha
         seq = Sequence()
         for i in range(3):
-            seq.add_keyframes((i*.75, KeyFrame(width=w*i, height=h*i, angle=angle)),
-                              ((i+1)*.75, KeyFrame(width=w*i, height=h*i, angle=angle)))
+            seq.add_keyframes((i*.75, KeyFrame(width=w*i, height=h*i, angle=angle, alpha=a)),
+                              ((i+1)*.75, KeyFrame(width=w*i, height=h*i, angle=angle, alpha=a)))
             w *= 7
             h *= 7
             angle += 540
+            a /= 2
         return seq
 
 
