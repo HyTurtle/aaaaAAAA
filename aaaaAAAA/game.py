@@ -486,7 +486,14 @@ class GameOverView(BaseScene):
 
     def setup(self) -> None:
         """Setup game over view."""
+        window = arcade.get_window()
+        scale = window.width / constants.SCREEN_WIDTH
         self.background = arcade.load_texture("assets/overworld/overworld_deadly.png")
+        self.pondhouse = _sprites.PondHouse(scale=scale)
+
+        self.pondhouse.position = (window.width * .66, window.height * .76)
+        self.events.hover(self.pondhouse, self.pondhouse.translucent)
+        self.events.out(self.pondhouse, self.pondhouse.opaque)
 
         self.ui_manager = UIManager()
         self.ui_manager.add_ui_element(MenuButton(self))
@@ -514,6 +521,7 @@ class GameOverView(BaseScene):
         )
 
         text.scale = 0.45
+        self.pondhouse.draw()
 
 
 class GameView(arcade.View):
