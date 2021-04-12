@@ -129,7 +129,7 @@ class Ducky(PydisSprite):
         seq = Sequence()
         seq.add_keyframes((0, KeyFrame(position=(x1, y1), alpha=0, scale=.21, angle=0)),
                           (.5, KeyFrame(position=(x1 + 30, y1 + 7), scale=.35, angle=0)))
-        for t, pos in enumerate(range(int(x1), int(x2), 10), start=2):
+        for t, pos in enumerate(range(int(x1), int(x2), int((x2-x1)/10)), start=2):
             if t % 2:
                 seq.add_keyframe(t/2, KeyFrame(position=(pos, y1 + 7)))
             else:
@@ -144,17 +144,15 @@ class Ducky(PydisSprite):
         x2, y2 = .3 * constants.SCREEN_WIDTH, .3 * constants.SCREEN_HEIGHT
 
         seq = Sequence()
-        for t, pos in enumerate(range(int(x1), int(x2), 10)):
+        for t, pos in enumerate(range(int(x1), int(x2), int((x2-x1)/10))):
             if t % 2:
                 seq.add_keyframe(t/2, KeyFrame(position=(pos, y1 + 7)))
             else:
                 seq.add_keyframe(t/2, KeyFrame(position=(pos, y1)))
             seq.add_keyframe((t+1)/2, KeyFrame(position=(x2, y2), angle=0))
-        else:
-            t = 0
         seq.add_keyframes(
-            ((t+2)/2, KeyFrame(position=(x2, y2), scale=.21)),
-            ((t+3)/2, KeyFrame(position=(x2, y2), scale=.07)))
+            (seq.total_time - .5, KeyFrame(position=(x2, y2), scale=.21)),
+            (seq.total_time, KeyFrame(position=(x2, y2), scale=.07)))
 
         return seq
 
