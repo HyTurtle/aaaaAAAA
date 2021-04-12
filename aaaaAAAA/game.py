@@ -363,7 +363,7 @@ class DuckScene(BaseScene):
         """Blow up a denied duck."""
         # Super impressive explosions
         seq = ducky.explode()
-        seq.add_callback(seq.total_time, lambda: self.ducks.remove(ducky))
+        seq.add_callback(seq.total_time, lambda: setattr(self, 'pondhouse_duck', None))
         self.animations.fire(ducky, seq)
 
     def move_to_path_queue(self, ducky: _sprites.Ducky) -> None:

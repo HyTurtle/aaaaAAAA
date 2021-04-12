@@ -150,6 +150,8 @@ class Ducky(PydisSprite):
             else:
                 seq.add_keyframe(t/2, KeyFrame(position=(pos, y1)))
             seq.add_keyframe((t+1)/2, KeyFrame(position=(x2, y2), angle=0))
+        else:
+            t = 0
         seq.add_keyframes(
             ((t+2)/2, KeyFrame(position=(x2, y2), scale=.21)),
             ((t+3)/2, KeyFrame(position=(x2, y2), scale=.07)))
