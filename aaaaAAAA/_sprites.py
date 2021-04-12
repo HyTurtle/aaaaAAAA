@@ -144,7 +144,7 @@ class Ducky(PydisSprite):
         x2, y2 = .3 * constants.SCREEN_WIDTH, .3 * constants.SCREEN_HEIGHT
 
         seq = Sequence()
-        for t, pos in enumerate(range(int(x1), int(x2), int((x2-x1)/10))):
+        for t, pos in enumerate(range(int(x1), int(x2), int((x2-x1)/3))):
             if t % 2:
                 seq.add_keyframe(t/2, KeyFrame(position=(pos, y1 + 7)))
             else:
