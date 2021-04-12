@@ -150,8 +150,11 @@ class DuckScene(BaseScene):
 
         self.background = arcade.load_texture("assets/overworld/overworld_healthy_no_lilies.png")
 
-        self.pondhouse = arcade.Sprite("assets/overworld/pondhouse/pondhouse_cropped.png", scale=scale)
+        self.pondhouse = _sprites.PondHouse(scale=scale)
         self.pondhouse.position = (window.width * .66, window.height * .76)
+
+        self.events.hover(self.pondhouse, self.pondhouse.translucent)
+        self.events.out(self.pondhouse, self.pondhouse.opaque)
 
         self.teller_window = arcade.Sprite("assets/overworld/teller window/teller_window.png", scale=scale)
         self.teller_window.position = (self.teller_window.width / 2, self.teller_window.height / 2)
@@ -503,7 +506,14 @@ class GameOverView(BaseScene):
 
     def setup(self) -> None:
         """Setup game over view."""
+        window = arcade.get_window()
+        scale = window.width / constants.SCREEN_WIDTH
         self.background = arcade.load_texture("assets/overworld/overworld_deadly.png")
+        self.pondhouse = _sprites.PondHouse(scale=scale)
+
+        self.pondhouse.position = (window.width * .66, window.height * .76)
+        self.events.hover(self.pondhouse, self.pondhouse.translucent)
+        self.events.out(self.pondhouse, self.pondhouse.opaque)
 
     def enter_scene(self, previous_scene: BaseScene) -> None:
         """Called when entering the scene."""
@@ -532,6 +542,7 @@ class GameOverView(BaseScene):
         )
 
         text.scale = 0.45
+        self.pondhouse.draw()
 
 
 class GameView(arcade.View):

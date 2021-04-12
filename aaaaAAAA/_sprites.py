@@ -211,3 +211,21 @@ class Lily(PydisSprite):
     def change_texture(self, colour: Optional[int] = 0) -> None:
         """Change the texture used by the sprite."""
         self.texture = self.textures[colour]
+
+
+class PondHouse(PydisSprite):
+    """Pondhouse sprite."""
+
+    def __init__(self, scale: Optional[float] = 1, *args, **kwargs):
+        super().__init__(scale=scale, *args, **kwargs)
+        self.texture = arcade.load_texture("assets/overworld/pondhouse/pondhouse_cropped.png")
+
+    @staticmethod
+    def opaque(sprite: arcade.Sprite, x: float, y: float) -> None:
+        """Make sprite opaque."""
+        sprite.alpha = 255
+
+    @staticmethod
+    def translucent(sprite: arcade.Sprite, x: float, y: float) -> None:
+        """Make sprite translucent."""
+        sprite.alpha = 126
