@@ -54,6 +54,7 @@ class Ducky(PydisSprite):
         self.pondhouse_seq = self.sequence_gen(random=True, loop=True)
         self.pond_seq = self.sequence_gen(random=True, loop=True, pond=True)
         self.off_screen = self._off_screen
+        self.explode = self._explode
         self.ducks.append(self)
 
     @staticmethod
@@ -167,6 +168,22 @@ class Ducky(PydisSprite):
             return
         pos_index = constants.POINTS_HINT.index(pos)
         return self.sequence_gen(shift=constants.POINTS_HINT[pos_index:pos_index+2])
+
+    def _explode(self) -> Sequence:
+        """Return a sequence to move the ducky off screen."""
+        x1, y1 = self.position
+        x2, y2 = constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT * .64
+        angle = degrees(sin((x2 - x1) / max((y2 - y1), 1)))
+        w, h, a = self.width, self.height, self.alpha
+        seq = Sequence()
+        for i in range(3):
+            seq.add_keyframes((i*.75, KeyFrame(width=w*i, height=h*i, angle=angle, alpha=a)),
+                              ((i+1)*.75, KeyFrame(width=w*i, height=h*i, angle=angle, alpha=a)))
+            w *= 7
+            h *= 7
+            angle += 540
+            a /= 2
+        return seq
 
 
 class Lily(PydisSprite):

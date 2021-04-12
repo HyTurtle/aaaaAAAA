@@ -356,10 +356,12 @@ class DuckScene(BaseScene):
             self.alter_toxicity(+1)
             self.streak = 0
 
-    def explode(self, ducky: arcade.Sprite) -> None:
+    def explode(self, ducky: _sprites.Ducky) -> None:
         """Blow up a denied duck."""
         # Super impressive explosions
-        self.pondhouse_duck = None
+        seq = ducky.explode()
+        seq.add_callback(seq.total_time, lambda: self.ducks.remove(ducky))
+        self.animations.fire(ducky, seq)
 
     def move_to_path_queue(self, ducky: _sprites.Ducky) -> None:
         """Move the ducky into the path_queue spritelist."""
