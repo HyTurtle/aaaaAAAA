@@ -15,15 +15,13 @@ from aaaaAAAA import _sprites, constants, menu
 
 TEXT_RGB = (70, 89, 134)
 FONT = "assets/fonts/LuckiestGuy-Regular.ttf"
-
-RULES = {
-    "Royal Party - Crowns Only": lambda ducky: ducky.hat == "crown",
-    "Face Warmers - Beards Only": lambda ducky: ducky.outfit == "beard",
-    "Biblical Pool - Halos and Horns\nOnly": lambda ducky: ducky.hat in ("horns", "halo"),
-    "Safe Space - No weapons": lambda ducky: not (ducky.equipment in ("baseball_bat", "lightsaber", "Sword")),
-    "Magical Night - Wizardry": lambda ducky: ducky.hat == "wizard" or ducky.equipment == "wand",
-    "Celebrators - Ducks that have\nsomething to\ncelebrate": lambda ducky: ducky.hat in ("mortarboard", "party")
-}
+RULES = {"Royal Party - Crowns Only": {"hat": ["crown"]},
+         "Face Warmers - Beards Only": {"outfit": ["beard"]},
+         "Biblical Pool - Halos and Horns\nOnly": {"hat": ["horns", "halo"]},
+         "Safe Space - No weapons": {"equipment": ["paintbrush", "radio", "sign", "trafficlight", "umbrella"]},
+         "Magical Night - Wizardry": {"hat": ["wizard"], "equipment": ["wand"]},
+         "Celebrators - Ducks that have\nsomething to\ncelebrate": {"hat": ["mortarboard", "party"]}
+         }
 
 
 class Colour(IntEnum):
@@ -284,8 +282,10 @@ class DuckScene(BaseScene):
         self.pondhouse_ducks.append(ducky)
         self.grant_entry(ducky)
 
-        if RULES[self.rule](ducky):
-            self.award_point()
+        for attr, value in RULES[self.rule].items():
+            if getattr(ducky, attr) in value:
+                self.award_point()
+                break
         else:
             self.retract_point()
 
@@ -300,8 +300,10 @@ class DuckScene(BaseScene):
 
         self.explode(ducky)
 
-        if not RULES[self.rule](ducky):
-            self.award_point()
+        for attr, value in RULES[self.rule].items():
+            if getattr(ducky, attr) in value:
+                self.award_point()
+                break
         else:
             self.retract_point()
 
